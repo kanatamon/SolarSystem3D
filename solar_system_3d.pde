@@ -161,10 +161,10 @@ void draw(){
   
   // refresh bg 
   background(0);
-  //rotateX(PI / 5f);
+  rotateX(radians(85));
   //rotateY(-PI / 3f);
   //rotateZ(-PI / 3f);
-  translate(width/2, height/2, -300);
+  translate(width/2, height/2 - 200, -400);
   
   // draw sun 
   sun.update(deltaTime);
@@ -174,8 +174,6 @@ void draw(){
   //lights(); // debug light
   pointLight(255, 255, 255, 0, 0, 0);
   
-  //earth.update(deltaTime);
-  //earth.display();
   //planets[5].update(deltaTime);
   for(int i = 0; i < planets.length; i++){
     planets[i].update(deltaTime);
