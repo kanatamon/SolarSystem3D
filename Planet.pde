@@ -15,6 +15,8 @@ class Planet{
   private float g;
   private float b;
   
+  public float rotation;
+  
   Planet(float _diameter, float _distance, float _orbitSpeed){
     diameter = _diameter;
     distance = _distance;
@@ -28,6 +30,7 @@ class Planet{
     r = 255;
     g = 255;
     b = 255;
+    rotation = 0;
   }
   
   public void update(float deltaTime){
@@ -41,6 +44,7 @@ class Planet{
   public void display(){
     pushMatrix();
       //rotateZ(theta);
+      rotateY(radians(rotation));
       rotateZ(theta);
       translate(distance, 0, 0);
          // draw their moon
@@ -66,6 +70,7 @@ class Planet{
   }
   
   public void drawFadeEffect(){
+    //noLights();
     float percent = 0;
     float step = 1 / (diameter * 0.5);
     
@@ -79,6 +84,8 @@ class Planet{
       fill(interpolation);
       sphere(diameter + lightRadius * percent);
     }
+    //lights();
+    //pointLight(255, 255, 255, 0, 0, 0);
   }
   
 }

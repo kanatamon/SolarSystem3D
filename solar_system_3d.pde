@@ -1,3 +1,5 @@
+final float e = 2.7182818f;
+
 Planet sun;
 
 Planet mercury;
@@ -12,10 +14,16 @@ Planet neptune;
 
 Planet[] planets;
 
+float dy;
+float dz;
+float degree;
+float percent;
+
 float preMillis;
 float t;
 void setup(){
   size(1280,720,P3D);
+  //size(640, 360, P3D);
   smooth();
   preMillis = millis();
   planets = new Planet[8];
@@ -66,7 +74,7 @@ void setup(){
   mars.b = 69;
   
   // asteroids initialization
-   for(int layer = 0; layer < 2; layer++){
+   for(int layer = 0; layer < 3; layer++){
     for(int i = 0 ; i < 25; i++){
       Planet obj = new Planet(1, 270 + layer * 5, 0.1 * 2 * PI * noise(t));
       t += 0.1f;
@@ -100,7 +108,7 @@ void setup(){
       obj.r = 192;
       obj.g = 192;
       obj.b = 192;
-      
+      obj.rotation = -20;
       saturn.addSatellite(obj);
     }
   }
@@ -119,7 +127,7 @@ void setup(){
       obj.r = 192;
       obj.g = 192;
       obj.b = 192;
-      
+      obj.rotation = -42;
       uranus.addSatellite(obj);
    }
    
@@ -137,7 +145,7 @@ void setup(){
       obj.r = 192;
       obj.g = 192;
       obj.b = 192;
-      
+      obj.rotation = -48;
       neptune.addSatellite(obj);
    }
    
@@ -151,7 +159,12 @@ void setup(){
   planets[5] = saturn;
   planets[6] = uranus;
   planets[7] = neptune;
- 
+  // z -> -600
+  dy = -400;
+  dz = -420;
+  degree = 85;
+  //degree = 0;
+  percent = 0f;
 }
 
 void draw(){
@@ -159,12 +172,23 @@ void draw(){
   float deltaTime = (millis() - preMillis )/ 1000;
   preMillis = millis();
   
+  // move view point 
+  if(percent <= 1){
+    // 1/(1 + e^((6-x*12))) sigmoid
+    percent += deltaTime / 20f;
+    float interpolation = 1 / (1 + pow(e, 6 - percent * 12));
+    dz = lerp(-360, -420,interpolation);
+    dy = lerp(200, -400,interpolation);
+    degree = lerp(90, 85,interpolation);
+  }
+ 
+  
   // refresh bg 
   background(0);
-  rotateX(radians(85));
+  rotateX(radians(degree));
   //rotateY(-PI / 3f);
   //rotateZ(-PI / 3f);
-  translate(width/2, height/2 - 200, -400);
+  translate(width/2, height/2 + dy, dz);
   
   // draw sun 
   sun.update(deltaTime);
@@ -181,3 +205,12 @@ void draw(){
   }
  
 }
+
+//void mouseWheel(MouseEvent event) {
+//  float e = event.getCount();
+//  //dz += e;
+//  dy += e;
+//  //degree += e;
+//  println("z = " + dz + ", y = " + dy);
+//  //println(e);
+//}
