@@ -2,9 +2,7 @@ class Planet{
   public float diameter;
   public float distance;
   public float lightRadius;
-  //public float smoothness;
-  //public color c;
-  
+ 
   public boolean isLight;
  
   public float orbitSpeed;
@@ -70,7 +68,7 @@ class Planet{
   }
   
   public void drawFadeEffect(){
-    //noLights();
+ 
     float percent = 0;
     float step = 1 / (diameter * 0.5);
     
@@ -84,8 +82,6 @@ class Planet{
       fill(interpolation);
       sphere(diameter + lightRadius * percent);
     }
-    //lights();
-    //pointLight(255, 255, 255, 0, 0, 0);
   }
   
 }
